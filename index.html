@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Matriks</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Kalkulator Matriks</h1>
+
+  <!-- Perkalian Matriks 2x2 × 2x3 -->
+  <section>
+    <h2>Perkalian Matriks (2×2 × 2×3)</h2>
+    <div class="matrix-block">
+      <div class="matrix" id="A-2x2"></div>
+      <span class="times">×</span>
+      <div class="matrix" id="B-2x3"></div>
+    </div>
+    <button onclick="calcMultiply()">Hitung</button>
+    <div id="result-multiply"></div>
+  </section>
+
+  <!-- Invers Matriks 2x2 -->
+  <section>
+    <h2>Invers Matriks (2×2)</h2>
+    <div class="matrix" id="Inv-2x2"></div>
+    <button onclick="calcInverse()">Hitung</button>
+    <div id="result-inverse"></div>
+  </section>
+
+  <!-- Persamaan Matriks AX = B -->
+  <section>
+    <h2>Persamaan Matriks (AX = B, A:2×2, B:2×1)</h2>
+    <div class="matrix-block">
+      <div class="matrix" id="EqA-2x2"></div>
+      <span class="times">×</span>
+      <div class="matrix" id="EqB-2x1"></div>
+    </div>
+    <button onclick="calcEquation()">Hitung</button>
+    <div id="result-equation"></div>
+  </section>
+
+  <!-- Determinan Matriks 3x3 -->
+  <section>
+    <h2>Determinan Matriks (3×3)</h2>
+    <div class="matrix" id="Det-3x3"></div>
+    <button onclick="calcDet()">Hitung</button>
+    <div id="result-det"></div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
