@@ -20,7 +20,9 @@ function readMatrix(prefix, rows, cols) {
   for (let i = 1; i <= rows; i++) {
     const row = [];
     for (let j = 1; j <= cols; j++) {
-      const val = parseFloat(document.getElementById(`${prefix}-${i}-${j}`).value);
+      const val = parseFloat(
+        document.getElementById(`${prefix}-${i}-${j}`).value
+      );
       if (isNaN(val)) throw new Error("Isi semua elemen");
       row.push(val);
     }
@@ -38,9 +40,9 @@ function renderMatrix(matrix, targetId) {
     return;
   }
   const table = document.createElement("table");
-  matrix.forEach(row => {
+  matrix.forEach((row) => {
     const tr = document.createElement("tr");
-    row.forEach(val => {
+    row.forEach((val) => {
       const td = document.createElement("td");
       td.textContent = Number(val.toFixed(2));
       tr.appendChild(td);
@@ -52,69 +54,70 @@ function renderMatrix(matrix, targetId) {
 
 // Basic operations
 function multiplyMatrix(A, B) {
-  const rA = A.length, cA = A[0].length, rB = B.length, cB = B[0].length;
+  const rA = A.length,
+    cA = A[0].length,
+    rB = B.length,
+    cB = B[0].length;
   if (cA !== rB) return null;
-  const C = Array.from({length: rA}, () => Array(cB).fill(0));
+  const C = Array.from({ length: rA }, () => Array(cB).fill(0));
   for (let i = 0; i < rA; i++)
     for (let j = 0; j < cB; j++)
-      for (let k = 0; k < cA; k++)
-        C[i][j] += A[i][k] * B[k][j];
+      for (let k = 0; k < cA; k++) C[i][j] += A[i][k] * B[k][j];
   return C;
 }
 
 function inverse2x2(M) {
-  const a = M[0][0], b = M[0][1], c = M[1][0], d = M[1][1];
-  const det = a*d - b*c;
+  const a = M[0][0],
+    b = M[0][1],
+    c = M[1][0],
+    d = M[1][1];
+  const det = a * d - b * c;
   if (Math.abs(det) < 1e-12) return null;
-  return [[d/det, -b/det], [-c/det, a/det]];
+  return [
+    [d / det, -b / det],
+    [-c / det, a / det],
+  ];
 }
 
 function det3x3(M) {
-  const [a,b,c] = M[0];
-  const [d,e,f] = M[1];
-  const [g,h,i] = M[2];
-  return a*(e*i - f*h) - b*(d*i - f*g) + c*(d*h - e*g);
+  const [a, b, c] = M[0];
+  const [d, e, f] = M[1];
+  const [g, h, i] = M[2];
+  return a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g);
 }
 
-function solve2x2(A, B) {
-  const inv = inverse2x2(A);
-  if (!inv) return null;
-  return multiplyMatrix(inv, B);
+// Generate input fields for B with dynamic columns
+function generateEqBMatrix() {
+  const cols = parseInt(document.getElementById("eq-b-cols").value) || 1;
+  generateMatrix("EqB-2xn", 2, cols);
 }
 
-// Handlers
-function calcMultiply() {
-  const A = readMatrix("A-2x2", 2, 2);
-  const B = readMatrix("B-2x3", 2, 3);
-  const C = multiplyMatrix(A, B);
-  renderMatrix(C, "result-multiply");
-}
+// Update B matrix input fields when column input changes
+document
+  .getElementById("eq-b-cols")
+  .addEventListener("input", generateEqBMatrix);
 
-function calcInverse() {
-  const A = readMatrix("Inv-2x2", 2, 2);
-  const inv = inverse2x2(A);
-  renderMatrix(inv, "result-inverse");
-}
-
+// Persamaan Matriks AX = B (B: 2xn)
 function calcEquation() {
   const A = readMatrix("EqA-2x2", 2, 2);
-  const B = readMatrix("EqB-2x1", 2, 1);
-  const X = solve2x2(A, B);
+  const colsB = parseInt(document.getElementById("eq-b-cols").value) || 1;
+  const B = readMatrix("EqB-2xn", 2, colsB);
+  const inv = inverse2x2(A);
+  if (!inv) {
+    renderMatrix(null, "result-equation");
+    return;
+  }
+  // X = inv(A) × B
+  const X = multiplyMatrix(inv, B);
   renderMatrix(X, "result-equation");
 }
 
-function calcDet() {
-  const A = readMatrix("Det-3x3", 3, 3);
-  const d = det3x3(A);
-  document.getElementById("result-det").textContent = "Determinannya = " + d;
-}
-
 // Initialize input fields
-window.onload = function() {
+window.onload = function () {
   generateMatrix("A-2x2", 2, 2);
   generateMatrix("B-2x3", 2, 3);
   generateMatrix("Inv-2x2", 2, 2);
   generateMatrix("EqA-2x2", 2, 2);
-  generateMatrix("EqB-2x1", 2, 1);
+  generateEqBMatrix(); // gunakan fungsi baru untuk B
   generateMatrix("Det-3x3", 3, 3);
 };
