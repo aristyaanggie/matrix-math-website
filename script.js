@@ -100,6 +100,26 @@ function calcEquation() {
   renderMatrix(X, "result-equation");
 }
 
+function calcMultiply() {
+  const A = readMatrix("A-2x2", 2, 2);
+  const B = readMatrix("B-2x3", 2, 3);
+  const result = multiplyMatrix(A, B);
+  renderMatrix(result, "result-multiply");
+}
+
+function calcInverse() {
+  const M = readMatrix("Inv-2x2", 2, 2);
+  const inv = inverse2x2(M);
+  renderMatrix(inv, "result-inverse");
+}
+
+function calcDet() {
+  const M = readMatrix("Det-3x3", 3, 3);
+  const det = det3x3(M);
+  const target = document.getElementById("result-det");
+  target.innerHTML = "Determinan: <b>" + det.toFixed(2) + "</b>";
+}
+
 // Initialize input fields
 window.onload = function () {
   generateMatrix("A-2x2", 2, 2);
