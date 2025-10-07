@@ -100,6 +100,48 @@ function calcEquation() {
   renderMatrix(X, "result-equation");
 }
 
+// Perkalian UI handler
+function calcMultiply() {
+  try {
+    const A = readMatrix("A-2x2", 2, 2);
+    const B = readMatrix("B-2x3", 2, 3);
+    const C = multiplyMatrix(A, B);
+    if (!C) {
+      document.getElementById("result-multiply").textContent = "Ordo matriks tidak cocok untuk perkalian.";
+      return;
+    }
+    renderMatrix(C, "result-multiply");
+  } catch (e) {
+    document.getElementById("result-multiply").textContent = e.message || String(e);
+  }
+}
+
+// Invers UI handler
+function calcInverse() {
+  try {
+    const M = readMatrix("Inv-2x2", 2, 2);
+    const inv = inverse2x2(M);
+    if (!inv) {
+      document.getElementById("result-inverse").textContent = "Matriks singular — tidak memiliki invers (det = 0).";
+      return;
+    }
+    renderMatrix(inv, "result-inverse");
+  } catch (e) {
+    document.getElementById("result-inverse").textContent = e.message || String(e);
+  }
+}
+
+// Determinan 3x3 UI handler
+function calcDet() {
+  try {
+    const M = readMatrix("Det-3x3", 3, 3);
+    const d = det3x3(M);
+    document.getElementById("result-det").textContent = `Determinan = ${Number(d.toFixed(2))}`;
+  } catch (e) {
+    document.getElementById("result-det").textContent = e.message || String(e);
+  }
+}
+
 // Initialize input fields
 window.onload = function () {
   generateMatrix("A-2x2", 2, 2);
