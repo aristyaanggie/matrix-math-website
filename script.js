@@ -86,22 +86,10 @@ function det3x3(M) {
   return a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g);
 }
 
-// Generate input fields for B with dynamic columns
-function generateEqBMatrix() {
-  const cols = parseInt(document.getElementById("eq-b-cols").value) || 1;
-  generateMatrix("EqB-2xn", 2, cols);
-}
-
-// Update B matrix input fields when column input changes
-document
-  .getElementById("eq-b-cols")
-  .addEventListener("input", generateEqBMatrix);
-
-// Persamaan Matriks AX = B (B: 2xn)
+// Persamaan Matriks AX = B (B: 2x2)
 function calcEquation() {
   const A = readMatrix("EqA-2x2", 2, 2);
-  const colsB = parseInt(document.getElementById("eq-b-cols").value) || 1;
-  const B = readMatrix("EqB-2xn", 2, colsB);
+  const B = readMatrix("EqB-2x2", 2, 2);
   const inv = inverse2x2(A);
   if (!inv) {
     renderMatrix(null, "result-equation");
@@ -118,6 +106,6 @@ window.onload = function () {
   generateMatrix("B-2x3", 2, 3);
   generateMatrix("Inv-2x2", 2, 2);
   generateMatrix("EqA-2x2", 2, 2);
-  generateEqBMatrix(); // gunakan fungsi baru untuk B
+  generateMatrix("EqB-2x2", 2, 2); // gunakan 2x2, bukan fungsi dinamis
   generateMatrix("Det-3x3", 3, 3);
 };

@@ -31,20 +31,11 @@
 
     <!-- Persamaan Matriks AX = B -->
     <section>
-      <h2>Persamaan Matriks (AX = B, A:2×2, B:2×n)</h2>
-      <label for="eq-b-cols">Jumlah kolom B:</label>
-      <input
-        type="number"
-        id="eq-b-cols"
-        min="1"
-        max="5"
-        value="1"
-        style="width: 40px"
-      />
+      <h2>Persamaan Matriks (AX = B, A:2×2, B:2×2)</h2>
       <div class="matrix-block">
         <div class="matrix" id="EqA-2x2"></div>
         <span class="times">×</span>
-        <div class="matrix" id="EqB-2xn"></div>
+        <div class="matrix" id="EqB-2x2"></div>
       </div>
       <button onclick="calcEquation()">Hitung</button>
       <div id="result-equation"></div>
