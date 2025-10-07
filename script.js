@@ -34,7 +34,7 @@ function renderMatrix(matrix, targetId) {
   const target = document.getElementById(targetId);
   target.innerHTML = "";
   if (!matrix) {
-    target.textContent = "Tidak bisa dihitung.";
+    target.textContent = "Inputkan angka ke  ordo.";
     return;
   }
   const table = document.createElement("table");
